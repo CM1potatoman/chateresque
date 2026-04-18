@@ -1,4 +1,4 @@
-// Archivist Chat Server - Production with Explicit KV
+// Archivist Chat Server - Uses assigned database automatically
 const kv = await Deno.openKv();
 const channel = new BroadcastChannel("archivist-chat");
 
@@ -31,7 +31,6 @@ Deno.serve({ port: 8080 }, (req) => {
   };
   
   socket.onopen = async () => {
-    console.log("Client connected");
     const result = await kv.get<ChatMessage[]>(MESSAGES_KEY);
     const messages = result.value || [];
     const recent = messages.slice(-50);
