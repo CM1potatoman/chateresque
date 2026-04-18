@@ -1,5 +1,10 @@
-// Archivist Chat Server - Production (NO CRON)
-const kv = await Deno.openKv();
+// Archivist Chat Server - Force Production KV
+const PRODUCTION_KV_ID = "c93b18b8-1461-41ba-b5a5-e88e46764f11";
+
+const kv = await Deno.openKv(
+  `https://api.deno.com/databases/${PRODUCTION_KV_ID}/connect`
+);
+
 const channel = new BroadcastChannel("archivist-chat");
 
 interface ChatMessage {
