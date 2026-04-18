@@ -1,4 +1,6 @@
 // Archivist Chat Server - Let Deno Handle KV
+console.log("🚀 ARCHIVIST CHAT SERVER STARTING - PRODUCTION");
+
 const kv = await Deno.openKv();
 const channel = new BroadcastChannel("archivist-chat");
 
