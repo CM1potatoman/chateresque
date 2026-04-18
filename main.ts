@@ -1,4 +1,4 @@
-// Archivist Chat Server - Simple
+// Archivist Chat Server - Let Deno Handle KV
 const kv = await Deno.openKv();
 const channel = new BroadcastChannel("archivist-chat");
 
@@ -31,11 +31,15 @@ Deno.serve({ port: 8080 }, (req) => {
   };
   
   socket.onopen = async () => {
-    const result = await kv.get<ChatMessage[]>(MESSAGES_KEY);
-    const messages = result.value || [];
-    const recent = messages.slice(-50);
-    for (const msg of recent) {
-      socket.send(JSON.stringify(msg));
+    try {
+      const result = await kv.get<ChatMessage[]>(MESSAGES_KEY);
+      const messages = result.value || [];
+      const recent = messages.slice(-50);
+      for (const msg of recent) {
+        socket.send(JSON.stringify(msg));
+      }
+    } catch (e) {
+      console.error("KV read error:", e);
     }
   };
   
@@ -77,7 +81,7 @@ Deno.serve({ port: 8080 }, (req) => {
         channel.postMessage(JSON.stringify(chatMsg));
       }
     } catch (e) {
-      // Silent fail
+      console.error("Message error:", e);
     }
   };
   
