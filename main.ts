@@ -1,4 +1,4 @@
-// Archivist Chat Server - Uses assigned database automatically
+// Archivist Chat Server - Production
 const kv = await Deno.openKv();
 const channel = new BroadcastChannel("archivist-chat");
 
