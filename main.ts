@@ -1,4 +1,4 @@
-// Archivist Chat Server - Production
+// Archivist Chat Server - Production (NO CRON)
 const kv = await Deno.openKv();
 const channel = new BroadcastChannel("archivist-chat");
 
